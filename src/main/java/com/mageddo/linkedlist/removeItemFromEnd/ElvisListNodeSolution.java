@@ -19,16 +19,19 @@ public class ElvisListNodeSolution implements Solution {
 
 		ListNode toRemove = head;
 		ListNode curr=head;
-		for(int i=0; curr != null; i++, curr = curr.next){
+		int i=0;
+		for(; curr != null; i++, curr = curr.next){
 			if(i > n){
 				toRemove = toRemove.next;
 			}
+		}
+		if(i == n){
+			return toRemove.next;
 		}
 
 		if(toRemove.next == null){
 			return null;
 		}
-
 		toRemove.next = toRemove.next.next;
 		return head;
 	}
