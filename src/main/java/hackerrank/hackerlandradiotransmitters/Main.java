@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * @see <a href="https://www.hackerrank.com/challenges/hackerland-radio-transmitters">Challenge Link</a>
  * @author elvis
  * @version $Revision: $<br/>
  *          $Id: $
@@ -15,8 +16,6 @@ import java.util.Scanner;
 public class Main {
 
 	private static final boolean DEBUG = false;
-
-//    https://www.hackerrank.com/challenges/hackerland-radio-transmitters
 
 	public static void main(String[] args) throws FileNotFoundException {
 
@@ -41,7 +40,8 @@ public class Main {
 		Arrays.sort(positions);
 
 		int usedTransmissors = 0;
-		final Integer[] street = new Integer[positions[positions.length - 1]];
+		final int highestHouseIndex = positions[positions.length - 1];
+		final Integer[] street = new Integer[highestHouseIndex];
 
 		for (final int housePostion : positions) {
 
@@ -66,18 +66,7 @@ public class Main {
 			usedTransmissors++;
 
 		}
-
 		return usedTransmissors;
-
-	}
-
-	private static void cleanTransmissorRange(List<Integer> street, int transmissorRange, int bestTransmissorIndex) {
-		for (int i = getMinIndex(transmissorRange, bestTransmissorIndex);
-				 i < getMaxIndex(street.size(), transmissorRange, bestTransmissorIndex);
-				 i++
-			) {
-			street.set(i, null);
-		}
 	}
 
 	public static int findNextTransmissorIndex(Integer[] street, int fromIndex, int transmissorRange) {
@@ -119,6 +108,15 @@ public class Main {
 				System.out.println(str);
 			}
 
+		}
+	}
+
+	private static void cleanTransmissorRange(List<Integer> street, int transmissorRange, int bestTransmissorIndex) {
+		for (int i = getMinIndex(transmissorRange, bestTransmissorIndex);
+				 i < getMaxIndex(street.size(), transmissorRange, bestTransmissorIndex);
+				 i++
+			) {
+			street.set(i, null);
 		}
 	}
 
