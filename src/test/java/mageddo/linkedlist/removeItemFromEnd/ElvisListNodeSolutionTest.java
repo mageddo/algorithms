@@ -82,10 +82,10 @@ public class ElvisListNodeSolutionTest {
 
 		// removendo e validando
 		final Solution solution = getInstance();
-		Assert.assertEquals("val=1, val=2", head.toString());
+		Assert.assertEquals("val=1, val=2, ", head.toString());
 
 		head = solution.removeNthFromEnd(head, 1);
-		Assert.assertEquals("val=1", head.toString());
+		Assert.assertEquals("val=1, ", head.toString());
 
 	}
 
