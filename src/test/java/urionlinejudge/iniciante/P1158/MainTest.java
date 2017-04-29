@@ -48,5 +48,4 @@ public class MainTest {
 		return new Main();
 	}
 
-
 }
