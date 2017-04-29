@@ -1,4 +1,4 @@
-package com.mageddo.linkedlist.removeItemFromEnd;
+package mageddo.linkedlist.removeItemFromEnd;
 
 /**
  * @author elvis

@@ -1,4 +1,4 @@
-package com.mageddo.lrucache.v1;
+package mageddo.lrucache.v1;
 
 /**
  * @author elvis
