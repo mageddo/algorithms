@@ -26,7 +26,7 @@ public class MainTest {
 	@Test
 	public void TestFindMinimumTransmissors3Success() throws Exception {
 		final int minimumTransmissors = Main.findMinimumTransmissors(7, 3, new int[]{2, 3, 4, 6, 8,9,10});
-		Assert.assertEquals(3, minimumTransmissors);
+		Assert.assertEquals(2, minimumTransmissors);
 	}
 
 
