@@ -1,7 +1,6 @@
 package hackerrank.hackerlandradiotransmitters;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,12 +14,14 @@ import java.util.Scanner;
  */
 public class Main {
 
+	private static final boolean DEBUG = true;
+
 //    https://www.hackerrank.com/challenges/hackerland-radio-transmitters
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 
-//		final InputStream in = new FileInputStream(new File("/home/elvis/Downloads/input06.txt"));
-		final InputStream in = System.in;
+		final InputStream in = new FileInputStream(new File("/home/elvis/Downloads/hackerrank/input06.txt"));
+//		final InputStream in = System.in;
 
 		final Scanner scanner = new Scanner(in);
 		int n = scanner.nextInt();
@@ -39,14 +40,30 @@ public class Main {
 		int usedTransmissors = 0;
 		// montando a lista e setando as casas nas posicoes corretas
 		Arrays.sort(positions);
-		final List<Integer> street = new ArrayList<>(Arrays.asList(new Integer[positions[positions.length - 1]]));
+		final List<House> street = new ArrayList<>(Arrays.asList(new House[positions[positions.length - 1]]));
 		for (int housePostion : positions) {
-			street.set(housePostion - 1, housePostion);
-		}
 
-		while (!streetClean(street)) {
+			final int index = housePostion - 1;
+			if(street.get(index) == null){
+				street.set(index, new House(housePostion));
+			}else{
+//				street.get(index).addQtd();
+//				street.add(index, new House(housePostion));
+			}
+
+		}
+		log(street);
+		while (true) {
 
 			final int bestTransmissorIndex = findBestTransmissorIndex(transmissorRange, street);
+			if (bestTransmissorIndex == -1){
+				break;
+			}
+
+//			log(
+//				bestTransmissorIndex + "-" + street.subList(getMinIndex(transmissorRange, bestTransmissorIndex),
+//				getMaxIndex(street.size(), transmissorRange, bestTransmissorIndex))
+//			);
 			for (int i = getMinIndex(transmissorRange, bestTransmissorIndex);
 					 i < getMaxIndex(street.size(), transmissorRange, bestTransmissorIndex);
 					 i++
@@ -54,23 +71,15 @@ public class Main {
 				street.set(i, null);
 			}
 			usedTransmissors++;
+
 		}
 
 		return usedTransmissors;
 
 	}
 
-	private static boolean streetClean(List<Integer> street) {
 
-		for (Integer integer : street) {
-			if (integer != null) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static int findBestTransmissorIndex(int transmissorRange, List<Integer> street) {
+	public static int findBestTransmissorIndex(int transmissorRange, List<House> street) {
 
 		int bestTransmissorIndex = -1;
 		int bestTransmissorRange = -1;
@@ -92,20 +101,23 @@ public class Main {
 				//                    continue;
 				//                }
 
-				if (street.get(j) != null) {
-					housesQtd++;
+				final House house = street.get(j);
+				if (house != null) {
+					housesQtd += house.getQtd();
 				}
 
 			}
-			if (housesQtd == transmissorRange * 2 + 1) {
-				bestTransmissorIndex = i;
-				break;
-			}
+//			if (housesQtd == transmissorRange * 2 + 1) {
+//				System.out.println("housesQtd == transmissorRange * 2 + 1");
+//				bestTransmissorIndex = i;
+//				break;
+//			}
 			if (housesQtd > bestTransmissorRange) {
 				bestTransmissorRange = housesQtd;
 				bestTransmissorIndex = i;
 			}
 		}
+		log("index=%d, range=%d", bestTransmissorIndex, bestTransmissorRange);
 		return bestTransmissorIndex;
 	}
 
@@ -115,9 +127,69 @@ public class Main {
 
 	private static int getMaxIndex(int size, int transmissorRange, int i) {
 
-		if (i + transmissorRange >= size) {
+		if (i + transmissorRange + 1 >= size) {
 			return size;
 		}
 		return i + transmissorRange + 1;
 	}
+
+	public static int countItemsNotNull(List items){
+		int count = 0;
+		for (Object item : items) {
+			if (item != null){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public static class House {
+
+		/*
+			this house number
+		 */
+		private int number;
+
+		/**
+		 * Houses quantity at this address
+		 */
+		private int qtd;
+
+		public House(int number) {
+			this.number = number;
+			this.qtd = 1;
+		}
+
+		public void addQtd() {
+			this.qtd++;
+		}
+
+		public int getQtd() {
+			return qtd;
+		}
+
+//		@Override
+//		public String toString() {
+//			return "{" +
+//				"number:" + number +
+//				", qtd:" + qtd +
+//				'}';
+//		}
+		@Override
+		public String toString() {
+			return String.valueOf(this.number);
+		}
+	}
+
+	private static void log (Object str, Object ... args){
+		if (DEBUG){
+			if (str instanceof String){
+				System.out.printf(str + "\n", args);
+			} else {
+				System.out.println(str);
+			}
+
+		}
+	}
+
 }
