@@ -1,9 +1,7 @@
 package hackerrank.gridlandmetro;
 
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @see <a href="https://www.hackerrank.com/challenges/gridland-metro">Challenge Link</a>
@@ -15,7 +13,7 @@ import java.util.Set;
 public class Main {
 
 	private static final boolean DEBUG = false;
-	private static final Set<String> TRAIN_TRACKS_SET = new HashSet<>();
+	private static final Map<Integer, Set<Track>> TRACK_MAP = new HashMap<>();
 
 	public static void main(String[] args)  {
 
@@ -31,13 +29,75 @@ public class Main {
 			int trackEndPos = scanner.nextInt();
 
 			for(int j=trackStartPos; j <= trackEndPos; j++){
-				TRAIN_TRACKS_SET.add(rowNum + "-" + j);
+				if(!TRACK_MAP.containsKey(rowNum)){
+					TRACK_MAP.put(rowNum, new TreeSet<>());
+				}
+
+				// calculando se posso colocar essa track na row
+				final Set<Track> tracks = TRACK_MAP.get(rowNum);
+				for (final Track track : tracks) {
+
+					if(trackStartPos >= track.getStart() && trackEndPos <= track.getEnd()){
+						 // é uma track que está dentro de outra track que ja existe
+						break;
+					}
+
+				}
+/**
+ * Possivel solucao
+ *
+ *
+ * ando pelas tracks querendo inserir c-f descubro que ja existe d-e, basta modificalo para c-f
+ * descubro que em seguida tem f-g, deleto o f ficando g-g e vou seguindo procurando conflitos
+ *
+ */
+
+
+// https://docs.google.com/spreadsheets/d/1fvsjk-EENDkTxpItwMa6HkMIIDFaFqfxEhcEeFPgw2Q/edit#gid=0
+//				- nova track esta dentro de uma track existente
+//				- nova track acopla duas ou mais das tracks existentes
+//				- nova track junta duas tracks existentes
+//				Nesse caso nao tem problema deixar as tres existindo
+
 			}
 
 		}
 
-		System.out.println(rows * cols - TRAIN_TRACKS_SET.size());
+		System.out.println(rows * cols - TRACK_MAP.size());
 
+	}
+
+	static class Track {
+
+		private int start, end;
+
+		public Track(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
+
+		public int getStart() {
+			return start;
+		}
+
+		public void setStart(int start) {
+			this.start = start;
+		}
+
+		public int getEnd() {
+			return end;
+		}
+
+		public void setEnd(int end) {
+			this.end = end;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			final Track t = (Track) obj;
+			return t.getStart() == this.getStart() && t.getEnd() == this.getEnd();
+
+		}
 	}
 
 }
