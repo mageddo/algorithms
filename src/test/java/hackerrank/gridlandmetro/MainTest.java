@@ -5,7 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
+import utils.TestUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -121,6 +124,39 @@ public class MainTest {
 		main.calcTracks(tracks, 11, 12);
 
 		Assert.assertEquals("[Track{start=0, end=12}]", tracks.toString());
+	}
+
+	@Test
+	public void testInsertAtStart5() throws Exception {
+
+		final Set<Main.Track> tracks = new TreeSet<>();
+		main.calcTracks(tracks, 20, 30);
+		main.calcTracks(tracks, 30, 40);
+		main.calcTracks(tracks, 20, 35);
+
+		Assert.assertEquals("[Track{start=20, end=40}]", tracks.toString());
+	}
+
+	@Test
+	public void testInsertAtStart6() throws Exception {
+
+		final Set<Main.Track> tracks = new TreeSet<>();
+		main.calcTracks(tracks, 20, 100);
+		main.calcTracks(tracks, 100, 120);
+		main.calcTracks(tracks, 100, 150);
+		main.calcTracks(tracks, 20, 80);
+		main.calcTracks(tracks, 20, 60);
+
+		Assert.assertEquals("[Track{start=0, end=12}]", tracks.toString());
+	}
+
+	@Test
+	public void testGeneral() throws FileNotFoundException {
+
+			final ByteArrayOutputStream out = TestUtils.setAndGetOut();
+			System.setIn(TestUtils.getResource(MainTest.class, "/input06.txt"));
+			Main.main(new String[]{});
+			Assert.assertEquals("343959391703854850\n", new String(out.toByteArray()));
 	}
 
 }
