@@ -12,32 +12,11 @@ import java.util.*;
  */
 public class Main {
 
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	private static final Map<Integer, Set<Track>> TRACK_MAP = new HashMap<>();
 
 	public static void main(String[] args)  {
-
 		new Main().start();
-
-/**
- * Possivel solucao
- *
- *
- * ando pelas tracks querendo inserir c-f descubro que ja existe d-e, basta modificalo para c-f
- * descubro que em seguida tem f-g, deleto o f ficando g-g e vou seguindo procurando conflitos
- *
- */
-
-
-// https://docs.google.com/spreadsheets/d/1fvsjk-EENDkTxpItwMa6HkMIIDFaFqfxEhcEeFPgw2Q/edit#gid=0
-//				- nova track esta dentro de uma track existente
-//				- nova track acopla duas ou mais das tracks existentes
-//				- nova track junta duas tracks existentes
-//				Nesse caso nao tem problema deixar as tres existindo
-
-
-
-
 	}
 
 	public void start(){
@@ -48,21 +27,31 @@ public class Main {
 		int cols = scanner.nextInt(); // m
 		int trainTracks = scanner.nextInt(); // k
 		for (int i = 0; i < trainTracks; i++) {
+
 			int rowNum = scanner.nextInt();
 			int trackStartPos = scanner.nextInt();
 			int trackEndPos = scanner.nextInt();
 
-			for (int j = trackStartPos; j <= trackEndPos; j++) {
-				if (!TRACK_MAP.containsKey(rowNum)) {
-					TRACK_MAP.put(rowNum, new TreeSet<>());
-				}
-
-				// calculando se posso colocar essa track na row
-				final Set<Track> tracks = TRACK_MAP.get(rowNum);
-				calcTracks(tracks, trackStartPos, trackEndPos);
+			if (!TRACK_MAP.containsKey(rowNum)) {
+				TRACK_MAP.put(rowNum, new TreeSet<>());
 			}
-			System.out.println(rows * cols - TRACK_MAP.size());
+
+			// calculando se posso colocar essa track na row
+			final Set<Track> tracks = TRACK_MAP.get(rowNum);
+			calcTracks(tracks, trackStartPos, trackEndPos);
+
+
 		}
+		long freeCells = (rows - TRACK_MAP.size()) * cols;
+		for (final Set<Track> tracks : TRACK_MAP.values()) {
+
+			long rowUsedCells = 0L;
+			for (final Track track : tracks) {
+				rowUsedCells += track.getEnd() - track.getStart() + 1;
+			}
+			freeCells += cols - rowUsedCells;
+		}
+		System.out.println(freeCells);
 	}
 
 	void calcTracks(Set<Track> tracks, int trackStartPos, int trackEndPos) {
@@ -116,7 +105,7 @@ public class Main {
 				track.setStart(trackStartPos);
 				continue;
 			}
-			
+
 
 		}
 	}
