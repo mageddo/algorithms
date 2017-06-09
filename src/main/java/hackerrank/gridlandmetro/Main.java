@@ -107,17 +107,16 @@ public class Main {
 				continue;
 			}
 
-//			if (trackStartPos <= track.getStart() && trackEndPos <= track.getEnd()) {
-//				track.setStart(trackStartPos);
-//				track.setEnd(trackEndPos);
-//				break;
-//			}
+			if (trackEndPos < track.getStart()){
+				tracks.add(new Track(trackStartPos, trackEndPos));
+				continue;
+			}
 
-//			if (trackStartPos <= track.getStart() && trackEndPos >= track.getEnd()){
-//				track.setStart(trackStartPos);
-//				track.setEnd(trackEndPos);
-//				continue;
-//			}
+			if (trackEndPos >= track.getStart()){
+				track.setStart(trackStartPos);
+				continue;
+			}
+			
 
 		}
 	}
