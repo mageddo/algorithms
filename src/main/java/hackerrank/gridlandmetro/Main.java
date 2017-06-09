@@ -67,6 +67,16 @@ public class Main {
 
 			final Track track = it.next();
 
+			if(trackEndPos == -1){
+				if(trackStartPos >= track.getStart() && trackStartPos <= track.getEnd()){
+					last.setEnd(track.getEnd());
+					it.remove();
+				} else if (trackStartPos >= track.getEnd()){
+					it.remove();
+				}
+				continue;
+			}
+
 			if (trackStartPos >= track.getStart() && trackEndPos <= track.getEnd()) {
 				// é uma track que está dentro de outra track que ja existe
 				if (trackEndPos != -1){

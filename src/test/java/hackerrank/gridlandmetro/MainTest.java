@@ -1,6 +1,7 @@
 package hackerrank.gridlandmetro;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -147,10 +148,11 @@ public class MainTest {
 		main.calcTracks(tracks, 20, 80);
 		main.calcTracks(tracks, 20, 60);
 
-		Assert.assertEquals("[Track{start=0, end=12}]", tracks.toString());
+		Assert.assertEquals("[Track{start=20, end=150}]", tracks.toString());
 	}
 
 	@Test
+//	@Ignore
 	public void testGeneral() throws FileNotFoundException {
 
 			final ByteArrayOutputStream out = TestUtils.setAndGetOut();
