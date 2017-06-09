@@ -77,16 +77,22 @@ public class Main {
 				continue;
 			}
 
-			if (trackStartPos >= track.getStart() && trackEndPos <= track.getEnd()) {
-				// é uma track que está dentro de outra track que ja existe
-				if (trackEndPos != -1){
-					log("status=current-track-inside-another");
-					break;
-				}else{
-					last.setEnd(track.getEnd());
-					it.remove();
+			if (trackStartPos == track.getStart()){
+				int oldEnd = track.getEnd();
+				track.setStart(trackStartPos);
+				track.setEnd(trackEndPos);
+				if(trackEndPos > oldEnd){
+					trackStartPos = trackEndPos;
+					trackEndPos = -1;
+					last = track;
 					continue;
 				}
+			}
+
+			if (trackStartPos > track.getStart() && trackEndPos <= track.getEnd()) {
+				// é uma track que está dentro de outra track que ja existe
+				log("status=current-track-inside-another");
+				break;
 			}
 
 			if (trackStartPos > track.getEnd()) {
