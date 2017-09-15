@@ -30,13 +30,13 @@ public class Main {
 			}
 
 			Collections.sort(pairs);
-			System.out.println(pairs);
+//			System.out.println(pairs);
 
 			// merging overlaps
 			for (int h = 0; h < pairs.size(); h++) {
 
 				final Pair pair1 = pairs.get(h);
-				int j = h + 1;
+				int j = h + 1, biggest = pair1.b;
 				for (; j < pairs.size(); j++) {
 
 					final Pair pair2 = pairs.get(j);
@@ -44,16 +44,26 @@ public class Main {
 						mergedPairs.add(new Pair(pair1.a, pairs.get(j-1).b));
 						h=j-1;
 						break;
+					} else {
+						if(pair2.b > biggest){
+							biggest = pair2.b;
+						}
 					}
 
 				}
 				if(j == pairs.size()){
-					mergedPairs.add(pair1);
+					mergedPairs.add(new Pair(pair1.a, biggest));
 					break;
 				}
 			}
 
-			System.out.println(mergedPairs);
+			for (int j = 0; j < mergedPairs.size(); j++) {
+				Pair p = mergedPairs.get(j);
+				System.out.printf("%d %d", p.a, p.b);
+				if(j != mergedPairs.size() - 1 ){
+					System.out.print(' ');
+				}
+			}
 			System.out.println();
 		}
 

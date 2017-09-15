@@ -32,4 +32,15 @@ public class MainTest {
 		Assert.assertEquals("1 4 6 8 9 10\n1 9\n", new String(out.toByteArray()));
 	}
 
+	@Test
+	public void case1() throws Exception {
+
+		System.setIn(TestUtils.getResource(MainTest.class, "/input01.txt"));
+		final ByteArrayOutputStream out = TestUtils.setAndGetOut();
+
+		main.main(new String[]{});
+
+		Assert.assertEquals("1 6\n", new String(out.toByteArray()));
+	}
+
 }
