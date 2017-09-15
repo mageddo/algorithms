@@ -1,5 +1,8 @@
 package geeksforgeeks.overlappingintervals;
 
+import java.io.ByteArrayOutputStream;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,8 +23,13 @@ public class MainTest {
 
 	@Test
 	public void case0() throws Exception {
+
 		System.setIn(TestUtils.getResource(MainTest.class, "/input00.txt"));
+		final ByteArrayOutputStream out = TestUtils.setAndGetOut();
+
 		main.main(new String[]{});
+
+		Assert.assertEquals("1 4 6 8 9 10\n1 9\n", new String(out.toByteArray()));
 	}
 
 }
