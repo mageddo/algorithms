@@ -1,6 +1,5 @@
 package hackerrank.gridlandmetro;
 
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.*;
 
@@ -20,16 +19,14 @@ public class Main {
 
 	public void start(){
 
-		final Map<Integer, List<TrainTrack>> trackMap = new HashMap<>();
-		final InputStream in = System.in;
-		BigInteger matrixSize = BigInteger.ZERO;
+		final Scanner scanner = new Scanner(System.in);
 
-		final Scanner scanner = new Scanner(in);
+		final Map<Integer, List<TrainTrack>> trackMap = new LinkedHashMap<>();
 		final int rows = scanner.nextInt(); // n
 		final int cols = scanner.nextInt(); // m
-		matrixSize = BigInteger.valueOf(rows).multiply(BigInteger.valueOf(cols));
-
+		final BigInteger matrixSize = BigInteger.valueOf(rows).multiply(BigInteger.valueOf(cols));
 		final int trainTracks = scanner.nextInt(); // k
+
 		for (int i = 0; i < trainTracks; i++) {
 
 			final int rowNum = scanner.nextInt();
@@ -45,60 +42,40 @@ public class Main {
 		}
 
 		// removing overlapping tracks
-//		System.out.println(trackMap.size());
 		for (final Integer rowNum : trackMap.keySet()) {
+
 			final List<TrainTrack> tracks = trackMap.get(rowNum);
+
 			Collections.sort(tracks);
 
-//			// priting result
-//			String msg = "";
-//			Iterator<TrainTrack> it = tracks.iterator();
-//			System.out.println(tracks.size());
-//			for (; it.hasNext() ;) {
-//				final TrainTrack p = it.next();
-//				if (!msg.isEmpty()) {
-//					System.out.printf(msg);
-//				}
-//				msg = String.format("%d %d ", p.start, p.end);
-//			}
-//			System.out.println(msg.trim());
-
 			final LinkedList<TrainTrack> mergedTracks = new LinkedList<>();
+
 			final Iterator<TrainTrack> it = tracks.iterator();
+
+			// put head element to be compared
 			mergedTracks.push(it.next());
 
 			while(it.hasNext()){
 
-				final TrainTrack current = it.next();
 				final TrainTrack head = mergedTracks.getFirst();
+				final TrainTrack current = it.next();
+
+				// If have a gap between HEAD and NEXT then add it to stack  as the HEAD
 				if(current.start > head.end){
 					mergedTracks.push(current);
 				}else if(current.end > head.end){
+					// If the two are overlapping then just set the head end with the next val (because List is sorted)
 					head.end = current.end;
 				}
 
 			}
 			tracks.clear();
-			Collections.reverse(mergedTracks);
+			// in this algorithm show intervals in  crescent order is not necessary
+//			Collections.reverse(mergedTracks);
+
+			// replace current list with merged overlaps
 			tracks.addAll(mergedTracks);
 		}
-
-
-//		for (final List<TrainTrack> tracks : trackMap.values()) {
-//			// priting result
-//			String msg = "";
-//			Iterator<TrainTrack> it = tracks.iterator();
-//			for (; it.hasNext() ;) {
-//				final TrainTrack p = it.next();
-//				if (!msg.isEmpty()) {
-//					System.out.printf(msg);
-//				}
-//				msg = String.format("%d %d ", p.start, p.end);
-//			}
-//			System.out.println(msg.trim());
-//
-//		}
-//
 		System.out.println(matrixSize.subtract(calcUsedCells(trackMap)));
 	}
 
