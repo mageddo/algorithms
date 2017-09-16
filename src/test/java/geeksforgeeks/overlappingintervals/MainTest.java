@@ -43,4 +43,15 @@ public class MainTest {
 		Assert.assertEquals("1 6\n", new String(out.toByteArray()));
 	}
 
+	@Test
+	public void case2() throws Exception {
+
+		System.setIn(TestUtils.getResource(MainTest.class, "/input02.txt"));
+		final ByteArrayOutputStream out = TestUtils.setAndGetOut();
+
+		main.main(new String[]{});
+
+		Assert.assertEquals("1 100\n", new String(out.toByteArray()));
+	}
+
 }

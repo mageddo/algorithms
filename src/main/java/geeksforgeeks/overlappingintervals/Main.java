@@ -1,9 +1,6 @@
 package geeksforgeeks.overlappingintervals;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author elvis
@@ -23,48 +20,45 @@ public class Main {
 
 		// getting the pairs
 			final List<Pair> pairs = new ArrayList<>();
-			final List<Pair> mergedPairs = new ArrayList<>();
+			final Deque<Pair> mergedPairs = new ArrayDeque<>();
 			final int pairsQtd = scanner.nextInt();
 			for(int j=0; j < pairsQtd; j++){
 				pairs.add(new Pair(scanner.nextInt(), scanner.nextInt()));
 			}
 
+			if(pairs.isEmpty()){
+				return ;
+			}
+
 			Collections.sort(pairs);
 //			System.out.println(pairs);
 
+			mergedPairs.push(pairs.get(0));
+
 			// merging overlaps
-			for (int h = 0; h < pairs.size(); h++) {
+			for (int h = 1; h < pairs.size(); h++) {
 
-				final Pair pair1 = pairs.get(h);
-				int j = h + 1, biggest = pair1.b;
-				for (; j < pairs.size(); j++) {
-
-					final Pair pair2 = pairs.get(j);
-					if(pair2.a - pair1.b > 0){
-						mergedPairs.add(new Pair(pair1.a, pairs.get(j-1).b));
-						h=j-1;
-						break;
-					} else {
-						if(pair2.b > biggest){
-							biggest = pair2.b;
-						}
-					}
-
+				final Pair head = mergedPairs.getFirst();
+				final Pair current = pairs.get(h);
+				if(current.a - head.b > 0){
+					mergedPairs.push(current);
+				}else if(current.b > head.b) {
+					head.b = current.b;
 				}
-				if(j == pairs.size()){
-					mergedPairs.add(new Pair(pair1.a, biggest));
-					break;
-				}
+
 			}
 
-			for (int j = 0; j < mergedPairs.size(); j++) {
-				Pair p = mergedPairs.get(j);
-				System.out.printf("%d %d", p.a, p.b);
-				if(j != mergedPairs.size() - 1 ){
-					System.out.print(' ');
+			String msg = "";
+			Iterator<Pair> it = mergedPairs.descendingIterator();
+			for (; it.hasNext() ;) {
+				final Pair p = it.next();
+				if (!msg.isEmpty()) {
+					System.out.printf(msg);
 				}
+				msg = String.format("%d %d ", p.a, p.b);
 			}
-			System.out.println();
+			System.out.println(msg.trim());
+
 		}
 
 	}
@@ -81,10 +75,11 @@ public class Main {
 		@Override
 		public int compareTo(Pair o) {
 			final int sComp = Integer.compare(this.a, o.a);
-			if(sComp != 0){
-				return sComp;
-			}
-			return Integer.compare(this.b, o.b);
+			return sComp;
+//			if(sComp != 0){
+//				return sComp;
+//			}
+//			return Integer.compare(this.b, o.b);
 		}
 
 		@Override
