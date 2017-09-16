@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -47,15 +48,14 @@ public class MainTest {
 		Assert.assertEquals("8\n", new String(out.toByteArray()));
 	}
 
-
 	@Test
-//	@Ignore
 	public void case6() throws FileNotFoundException {
 
 			final ByteArrayOutputStream out = TestUtils.setAndGetOut();
 			System.setIn(TestUtils.getResource(MainTest.class, "/input06.txt"));
 			Main.main(new String[]{});
 			Assert.assertEquals("343959391703854850\n", new String(out.toByteArray()));
+
 	}
 
 }

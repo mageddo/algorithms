@@ -1,6 +1,7 @@
 package hackerrank.gridlandmetro;
 
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -21,12 +22,12 @@ public class Main {
 
 		final Map<Integer, List<TrainTrack>> trackMap = new HashMap<>();
 		final InputStream in = System.in;
-		int matrixSize = -1;
+		BigInteger matrixSize = BigInteger.ZERO;
 
 		final Scanner scanner = new Scanner(in);
 		final int rows = scanner.nextInt(); // n
 		final int cols = scanner.nextInt(); // m
-		matrixSize = rows * cols;
+		matrixSize = BigInteger.valueOf(rows).multiply(BigInteger.valueOf(cols));
 
 		final int trainTracks = scanner.nextInt(); // k
 		for (int i = 0; i < trainTracks; i++) {
@@ -44,38 +45,68 @@ public class Main {
 		}
 
 		// removing overlapping tracks
-		for (final List<TrainTrack> tracks : trackMap.values()) {
-
+//		System.out.println(trackMap.size());
+		for (final Integer rowNum : trackMap.keySet()) {
+			final List<TrainTrack> tracks = trackMap.get(rowNum);
 			Collections.sort(tracks);
 
-			final LinkedList<TrainTrack> stack = new LinkedList<>();
+//			// priting result
+//			String msg = "";
+//			Iterator<TrainTrack> it = tracks.iterator();
+//			System.out.println(tracks.size());
+//			for (; it.hasNext() ;) {
+//				final TrainTrack p = it.next();
+//				if (!msg.isEmpty()) {
+//					System.out.printf(msg);
+//				}
+//				msg = String.format("%d %d ", p.start, p.end);
+//			}
+//			System.out.println(msg.trim());
+
+			final LinkedList<TrainTrack> mergedTracks = new LinkedList<>();
 			final Iterator<TrainTrack> it = tracks.iterator();
-			stack.push(it.next());
+			mergedTracks.push(it.next());
 
 			while(it.hasNext()){
 
 				final TrainTrack current = it.next();
-				final TrainTrack head = stack.getFirst();
-				if(current.start > (head.end+1)){
-					stack.push(current);
+				final TrainTrack head = mergedTracks.getFirst();
+				if(current.start > head.end){
+					mergedTracks.push(current);
 				}else if(current.end > head.end){
 					head.end = current.end;
 				}
 
 			}
 			tracks.clear();
-//			Collections.reverse(stack);
-			tracks.addAll(stack);
+			Collections.reverse(mergedTracks);
+			tracks.addAll(mergedTracks);
 		}
 
-		System.out.println(matrixSize - calcUsedCells(trackMap));
+
+//		for (final List<TrainTrack> tracks : trackMap.values()) {
+//			// priting result
+//			String msg = "";
+//			Iterator<TrainTrack> it = tracks.iterator();
+//			for (; it.hasNext() ;) {
+//				final TrainTrack p = it.next();
+//				if (!msg.isEmpty()) {
+//					System.out.printf(msg);
+//				}
+//				msg = String.format("%d %d ", p.start, p.end);
+//			}
+//			System.out.println(msg.trim());
+//
+//		}
+//
+		System.out.println(matrixSize.subtract(calcUsedCells(trackMap)));
 	}
 
-	private int calcUsedCells(final Map<Integer, List<TrainTrack>> trackMap) {
-		int usedCells = 0;
+	private BigInteger calcUsedCells(final Map<Integer, List<TrainTrack>> trackMap) {
+		BigInteger usedCells = BigInteger.ZERO;
 		for (final List<TrainTrack> trainTracks : trackMap.values()) {
 			for (final TrainTrack trainTrack : trainTracks) {
-				usedCells += trainTrack.end - trainTrack.start + 1;
+				usedCells = usedCells.add(BigInteger.valueOf(trainTrack.end).subtract(BigInteger.valueOf(trainTrack.start)).add(BigInteger.ONE));
 			}
 		}
 		return usedCells;
@@ -83,7 +114,7 @@ public class Main {
 
 	static class TrainTrack implements Comparable<TrainTrack> {
 
-		int start, end;
+		long start, end;
 
 		public TrainTrack(int start, int end) {
 			this.start = start;
@@ -92,7 +123,7 @@ public class Main {
 
 		@Override
 		public int compareTo(TrainTrack o) {
-			return Integer.compare(this.start, o.end);
+			return Long.compare(this.start, o.start);
 		}
 
 		@Override
