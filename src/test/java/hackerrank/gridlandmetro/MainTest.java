@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,6 +39,17 @@ public class MainTest {
 	}
 
 	@Test
+	public void caseInputForum() throws FileNotFoundException {
+
+		final ByteArrayOutputStream out = TestUtils.setAndGetOut();
+		System.setIn(TestUtils.getResource(MainTest.class, "/inputForum.txt"));
+		Main.main(new String[]{});
+		Assert.assertEquals("8\n", new String(out.toByteArray()));
+	}
+
+
+	@Test
+//	@Ignore
 	public void case6() throws FileNotFoundException {
 
 			final ByteArrayOutputStream out = TestUtils.setAndGetOut();

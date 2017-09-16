@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.*;
 
 /**
- * @see <a href="https://www.hackerrank.com/challenges/gridland-metro">Challenge Link</a>
+ * @see <start href="https://www.hackerrank.com/challenges/gridland-metro">Challenge Link</start>
  * @author elvis
  * @version $Revision: $<br/>
  *          $Id: $
@@ -12,8 +12,6 @@ import java.util.*;
  */
 public class Main {
 
-	private static final boolean DEBUG = false;
-	private static final Map<Integer, Set<Integer>> TRACK_MAP = new HashMap<>();
 
 	public static void main(String[] args)  {
 		new Main().start();
@@ -21,6 +19,7 @@ public class Main {
 
 	public void start(){
 
+		final Map<Integer, List<TrainTrack>> trackMap = new HashMap<>();
 		final InputStream in = System.in;
 		int matrixSize = -1;
 
@@ -36,29 +35,69 @@ public class Main {
 			final int trackStartPos = scanner.nextInt() - 1;
 			final int trackEndPos = scanner.nextInt() - 1;
 
-			if (!TRACK_MAP.containsKey(rowNum)) {
-				TRACK_MAP.put(rowNum, new TreeSet<>());
+			if (!trackMap.containsKey(rowNum)) {
+				trackMap.put(rowNum, new ArrayList<>());
 			}
 
-			addTrainTrack(TRACK_MAP.get(rowNum), trackStartPos, trackEndPos);
+			trackMap.get(rowNum).add(new TrainTrack(trackStartPos, trackEndPos));
 
 		}
 
-		final int necessaryLampposts = calcLampposts(TRACK_MAP);
-		System.out.println(matrixSize - necessaryLampposts);
-	}
+		// removing overlapping tracks
+		for (final List<TrainTrack> tracks : trackMap.values()) {
 
-	private int calcLampposts(Map<Integer, Set<Integer>> trackMap) {
-		int sum = 0;
-		for (final Set<Integer> row : trackMap.values()) {
-			sum += row.size();
+			Collections.sort(tracks);
+
+			final LinkedList<TrainTrack> stack = new LinkedList<>();
+			final Iterator<TrainTrack> it = tracks.iterator();
+			stack.push(it.next());
+
+			while(it.hasNext()){
+
+				final TrainTrack current = it.next();
+				final TrainTrack head = stack.getFirst();
+				if(current.start > (head.end+1)){
+					stack.push(current);
+				}else if(current.end > head.end){
+					head.end = current.end;
+				}
+
+			}
+			tracks.clear();
+//			Collections.reverse(stack);
+			tracks.addAll(stack);
 		}
-		return sum;
+
+		System.out.println(matrixSize - calcUsedCells(trackMap));
 	}
 
-	private void addTrainTrack(Set<Integer> trainTrack, int trackStartPos, int trackEndPos) {
-		for(int i=trackStartPos; i <= trackEndPos; i++ ){
-			trainTrack.add(i);
+	private int calcUsedCells(final Map<Integer, List<TrainTrack>> trackMap) {
+		int usedCells = 0;
+		for (final List<TrainTrack> trainTracks : trackMap.values()) {
+			for (final TrainTrack trainTrack : trainTracks) {
+				usedCells += trainTrack.end - trainTrack.start + 1;
+			}
+		}
+		return usedCells;
+	}
+
+	static class TrainTrack implements Comparable<TrainTrack> {
+
+		int start, end;
+
+		public TrainTrack(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
+
+		@Override
+		public int compareTo(TrainTrack o) {
+			return Integer.compare(this.start, o.end);
+		}
+
+		@Override
+		public String toString() {
+			return "{start: " + start + ", end: " + end + "}";
 		}
 	}
 

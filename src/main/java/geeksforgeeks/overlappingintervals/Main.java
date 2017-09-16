@@ -3,6 +3,8 @@ package geeksforgeeks.overlappingintervals;
 import java.util.*;
 
 /**
+ * http://practice.geeksforgeeks.org/problems/overlapping-intervals/0
+ *
  * @author elvis
  * @version $Revision: $<br/>
  * $Id: $
@@ -40,7 +42,7 @@ public class Main {
 
 				final Pair head = mergedPairs.getFirst();
 				final Pair current = pairs.get(h);
-				if(current.a - head.b > 0){
+				if(current.a > head.b){
 					mergedPairs.push(current);
 				}else if(current.b > head.b) {
 					head.b = current.b;
@@ -48,6 +50,7 @@ public class Main {
 
 			}
 
+			// priting result
 			String msg = "";
 			Iterator<Pair> it = mergedPairs.descendingIterator();
 			for (; it.hasNext() ;) {
@@ -74,12 +77,7 @@ public class Main {
 
 		@Override
 		public int compareTo(Pair o) {
-			final int sComp = Integer.compare(this.a, o.a);
-			return sComp;
-//			if(sComp != 0){
-//				return sComp;
-//			}
-//			return Integer.compare(this.b, o.b);
+			return Integer.compare(this.a, o.a);
 		}
 
 		@Override
