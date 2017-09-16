@@ -5,6 +5,13 @@ import java.util.*;
 
 /**
  * @see <start href="https://www.hackerrank.com/challenges/gridland-metro">Challenge Link</start>
+ *
+ * This algorithm uses follow principle
+ *
+ * http://www.geeksforgeeks.org/merging-intervals/
+ *
+ * The idea is to represent long ranges of data with few data and few fors
+ *
  * @author elvis
  * @version $Revision: $<br/>
  *          $Id: $
