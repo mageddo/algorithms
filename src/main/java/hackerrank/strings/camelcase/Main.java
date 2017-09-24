@@ -8,7 +8,7 @@ public class Main {
 		final String words = new Scanner(System.in).nextLine();
 		int count = 1;
 		for (final char c : words.toCharArray()) {
-			if(c >= 64 && c <= 90){
+			if(c >= 'A' /* 65 */ && c <= 'Z' /* 90 */){
 				count++;
 			}
 		}
