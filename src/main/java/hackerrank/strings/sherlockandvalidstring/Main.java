@@ -3,6 +3,8 @@ package hackerrank.strings.sherlockandvalidstring;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * https://www.hackerrank.com/challenges/sherlock-and-valid-string
@@ -23,94 +25,29 @@ public class Main {
 
 		}
 
-		final List<Word> wordList = new ArrayList<>(words.values());
-		Collections.sort(wordList);
-
-		int leftCount = 1;
-
-		for (int i = 0; i < wordList.size(); i++) {
-			for (int j = i + 1; j < wordList.size(); j++) {
-
-				Word a = wordList.get(i);
-				Word b = wordList.get(j);
-
-				final int diff = b.count - a.count;
-				if(diff == 1){
-					if(leftCount > 0){
-						leftCount--;
-						break;
-					}else{
-						System.out.println("NO");
-						return ;
-					}
-				} else if(diff > 1){
-					System.out.println("NO");
-					return ;
-				} else {
-
-				}
-//				System.out.println("NO");
-
+		final Map<Integer, AtomicInteger> countOfCount = new HashMap<>();
+		for (final Word word : words.values()) {
+			if(!countOfCount.containsKey(word.count)){
+				countOfCount.put(word.count, new AtomicInteger(0));
 			}
+			countOfCount.get(word.count).incrementAndGet();
 		}
+
+		final List<AtomicInteger> counts = new ArrayList<>(countOfCount.values());
+		counts.sort(Comparator.comparingInt(AtomicInteger::get));
+		if(counts.size() <= 1){
+			System.out.println("YES");
+			return ;
+		}
+
+		if(counts.get(counts.size() - 1).get() > 1 && counts.get(counts.size() - 2).get() > 1){
+			System.out.println("NO");
+			return ;
+		}
+
 		System.out.println("YES");
 
-//		if (wordList.size() == 1) {
-//			System.out.println("YES");
-//			return;
-//		}
-
-//
-//		for (int i = 0, j = wordList.size() - 1; i <= j; i++) {
-//			int gapLeft = 1;
-//
-//			for (j = wordList.size(); j > i; j--) {
-//
-//				final Word a = wordList.get(i), b = wordList.get(j);
-//				int diff = b.count - a.count;
-//				if(diff > 1) {
-//					System.out.println("NO");
-//				} else if(diff == 1) {
-//					if(gapLeft == 0) {
-//						System.out.println("NO");
-//					}else {
-//						gapLeft--;
-//					}
-//				} else {
-//					System.out.println("YES");
-//				}
-//			}
-//		}
-
-//		final Word first = wordList.getFirst();
-//		final Word last = wordList.getLast();
-
-//		if(wordList.size() == 2 ){
-//			if (last.count - first.count <= 1) {
-//				System.out.println("YES");
-//				return;
-//			}
-//			System.out.println("NO");
-//		} else {
-//
-//			if (last.count - first.count == 0){
-//				System.out.println("YES");
-//			} else if(last.count - first.count == 1){
-//
-//				final Word second = wordList.get(1);
-//				if(second.count - first.count == 0){
-//
-//				}
-//
-//
-//			} else {
-//				System.out.println("NO");
-//			}
-
-		}
-
-//	}
-
+	}
 
 	static class Word implements Comparable<Word> {
 

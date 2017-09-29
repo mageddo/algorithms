@@ -69,7 +69,20 @@ public class MainTest {
 
 		Main.main(new String[]{});
 
-		Assert.assertEquals("NO\n", new String(out.toByteArray()));
+		Assert.assertEquals("YES\n", new String(out.toByteArray()));
+
+	}
+
+
+	@Test
+	public void case95() throws Exception {
+
+		ByteArrayOutputStream out = setAndGetOut();
+		writeToIn("abcccc".getBytes());
+
+		Main.main(new String[]{});
+
+		Assert.assertEquals("YES\n", new String(out.toByteArray()));
 
 	}
 
