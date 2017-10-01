@@ -1,6 +1,5 @@
 package hackerrank.strings.marsexploration;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -13,15 +12,12 @@ public class Main {
 		final char[] str = scanner.nextLine().toCharArray();
 		int count = 0;
 
-		for (int i = 0; i < str.length; i += sos.length) {
+		for (int i = 0; i < str.length; i++) {
 
-			final char[] word = Arrays.copyOfRange(str, i, i + sos.length);
-
-			for (int j = 0; j < sos.length; j++) {
-				if(sos[j] != word[j]){
+				if(str[i] != sos[Math.min(i % sos.length, sos.length - 1)]) {
 					count++;
 				}
-			}
+
 		}
 		System.out.println(count);
 
