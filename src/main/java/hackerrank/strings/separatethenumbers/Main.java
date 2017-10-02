@@ -52,7 +52,11 @@ public class Main {
 
 		long first = -1;
 		long last = getNumber(numbers, 0, places);
-		for (int i = places; i + places <= numbers.length;) {
+		for (int i = places; i < numbers.length;) {
+
+			if(numbers.length - places < places) {
+				return -1;
+			}
 
 			long b = getNumber(numbers, i, places);
 
