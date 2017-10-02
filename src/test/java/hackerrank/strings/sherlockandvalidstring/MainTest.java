@@ -1,18 +1,15 @@
 package hackerrank.strings.sherlockandvalidstring;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
-import sun.misc.IOUtils;
-import utils.TestUtils;
 
 import java.io.ByteArrayOutputStream;
 
 import static org.apache.commons.io.IOUtils.toByteArray;
-import static org.junit.Assert.*;
-import static utils.TestUtils.getResource;
-import static utils.TestUtils.setAndGetOut;
-import static utils.TestUtils.writeToIn;
+import static utils.TestUtils.*;
 
+@Ignore
 public class MainTest {
 
 	@Test
