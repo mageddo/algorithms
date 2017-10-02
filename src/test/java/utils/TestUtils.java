@@ -36,4 +36,12 @@ public final class TestUtils {
 		System.setIn(new ByteArrayInputStream(bytes));
 	}
 
+	public static void writeToIn(InputStream in) throws IOException {
+		System.setIn(new ByteArrayInputStream(IOUtils.toByteArray(in)));
+	}
+
+	public static void writeToIn(Class clazz, String resource) throws IOException {
+		System.setIn(new ByteArrayInputStream(IOUtils.toByteArray(getResource(clazz, resource))));
+	}
+
 }

@@ -2,11 +2,11 @@ package hackerrank.strings.separatethenumbers;
 
 import org.junit.Assert;
 import org.junit.Test;
+import utils.TestUtils;
 
 import java.io.ByteArrayOutputStream;
 
-import static utils.TestUtils.setAndGetOut;
-import static utils.TestUtils.writeToIn;
+import static utils.TestUtils.*;
 
 public class MainTest {
 
@@ -93,6 +93,18 @@ public class MainTest {
 		Main.main(new String[]{});
 
 		Assert.assertEquals("NO\n", new String(out.toByteArray()));
+
+	}
+
+	@Test
+	public void case0() throws Exception {
+
+		final ByteArrayOutputStream out = setAndGetOut();
+		writeToIn(getClass(), "/input00.txt");
+
+		Main.main(new String[]{});
+
+		Assert.assertEquals(getResourceAsString(getClass(), "/output00.txt"), new String(out.toByteArray()));
 
 	}
 

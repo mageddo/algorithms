@@ -12,16 +12,24 @@ public class Main {
 
 		final Scanner scanner = new Scanner(System.in);
 		final int n = Integer.parseInt(scanner.nextLine());
-		final char[] numbers = scanner.nextLine().toCharArray();
 
-		int casas = 1;
+		for (int i = 0; i < n; i++) {
+			final char[] numbers = scanner.nextLine().toCharArray();
+			checkIntervalOfOne(numbers);
+		}
+
+	}
+
+	static void checkIntervalOfOne(char[] numbers) {
+
+		int places = 1;
 		int first = -1, last = -1;
-		for (int i = 0; i + casas <= numbers.length; ) {
+		for (int i = 0; i + places <= numbers.length; ) {
 
-			int a = getInt(numbers, i, casas);
-			int b = getInt(numbers,i + casas, casas);
+			int a = getInt(numbers, i, places);
+			int b = getInt(numbers,i + places, places);
 			if(b == -1){
-				casas++;
+				places++;
 				continue;
 			} else if (b == -2){
 				int tmp = a;
@@ -32,11 +40,11 @@ public class Main {
 			boolean increased = false;
 			if(b <= a){
 				increased = true;
-				if(i + casas + casas >= numbers.length){
+				if(i + places + places >= numbers.length){
 					first = -1;
 					break;
 				}
-				b = getInt(numbers,i + casas, ++casas);
+				b = getInt(numbers,i + places, ++places);
 				if(b == -1){
 					continue;
 				}
@@ -51,9 +59,9 @@ public class Main {
 				break;
 			} else if (diff == 1) {
 				if (!increased){
-					i += casas * 2;
+					i += places * 2;
 				} else {
-					i += casas * 2 - 1;
+					i += places * 2 - 1;
 				}
 				if(first == -1){
 					first = a;
@@ -62,7 +70,7 @@ public class Main {
 				continue;
 			}
 
-			System.out.println("never happen");
+			throw new UnsupportedOperationException("cannot come here");
 
 		}
 
@@ -72,7 +80,6 @@ public class Main {
 		} else {
 			System.out.println("NO");
 		}
-
 	}
 
 	private static int getInt(char[] numbers, int i, int n) {
