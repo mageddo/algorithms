@@ -119,4 +119,16 @@ public class MainTest {
 
 	}
 
+	@Test
+	public void case16() throws Exception {
+
+		final ByteArrayOutputStream out = setAndGetOut();
+		writeToIn(getClass(), "/input16.txt");
+
+		Main.main(new String[]{});
+
+		Assert.assertEquals(getResourceAsString(getClass(), "/output16.txt"), new String(out.toByteArray()));
+
+	}
+
 }

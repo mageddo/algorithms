@@ -14,79 +14,109 @@ public class Main {
 		final int n = Integer.parseInt(scanner.nextLine());
 
 		for (int i = 0; i < n; i++) {
+
 			final char[] numbers = scanner.nextLine().toCharArray();
-			checkIntervalOfOne(numbers);
+			final long first = checkIntervalOfOne(numbers);
+			if(first == -1){
+				System.out.println("NO");
+			} else {
+				System.out.printf("YES %d%n", first);
+			}
 		}
 
 	}
 
-	static void checkIntervalOfOne(char[] numbers) {
+	static long checkIntervalOfOne(char[] numbers) {
+
+		long first = -1;
 
 		if(numbers.length == 1 || numbers[0] == '0'){
-			System.out.println("NO");
-			return ;
+			return first;
 		}
 
-		int places = 1, first;
+		int places = 1;
 		do {
 
 			first = checkInterval(numbers, places);
 			if(first != -1){
-				System.out.printf("YES %d%n", first);
-				return ;
+				return first;
 			}
 			places++;
 
 		}while (numbers.length / places >= 2);
 
-		System.out.println("NO");
-
+		return first;
 	}
 
-	private static int checkInterval(char[] numbers, int places) {
+	private static long checkInterval(char[] numbers, int places) {
 
-		int first = -1;
-		int last = getInt(numbers, 0, places);
+		long first = -1;
+		long last = getNumber(numbers, 0, places);
 		for (int i = places; i + places <= numbers.length;) {
 
-			int b = getInt(numbers, i, places);
+			long b = getNumber(numbers, i, places);
 
+			// number could not be parsed
 			if(b <= 0){
 				return -1;
 			}
 
+			// b is smaller then need a one more place
 			if(b < last){
-				b = getInt(numbers, i, ++places);
+				b = getNumber(numbers, i, ++places);
 				if(b <= 0){
 					return -1;
 				}
 			}
 
-			final int diff = b - last;
+			final long diff = b - last;
+
 			if(diff > 1 || diff == 0){
+
+				// if the difference is more than one or the two are equal then this configuration will not be valid, try start
+				// with a greater place size
 				return -1;
+
 			} else if(diff == 1){
+
 				i += places;
 				if(first == -1){
 					first = last;
 				}
 				last = b;
+
 			}
 		}
 		return first;
 	}
 
-	private static int getInt(char[] numbers, int i, int n) {
-		if (n > 9){
+	/**
+	 * Get a number from the specified range of the array
+	 * @param numbers
+	 * @param from - inclusive
+	 * @param to - exclusive
+	 * @return
+	 */
+	private static long getNumber(char[] numbers, int from, int to) {
+
+		// checking if it overflow long value
+		if (to > 19 - 1){
 			return -3;
 		}
-		if(i + n > numbers.length){
+		// checking the index overflow array size
+		if(from + to > numbers.length){
 			return -2;
 		}
-		if(numbers[i] == '0'){
+
+		// leading zeros are not allowed
+		if(numbers[from] == '0'){
 			return -1;
 		}
-		final String nstr = new String(Arrays.copyOfRange(numbers, i, i + n));
-		return Integer.parseInt(nstr);
+
+		// parsing the char array into a long number
+		return Long.parseLong(new String(
+			Arrays.copyOfRange(numbers, from, from + to)
+		));
+
 	}
 }
