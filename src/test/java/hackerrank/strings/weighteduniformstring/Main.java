@@ -1,9 +1,6 @@
 package hackerrank.strings.weighteduniformstring;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -12,27 +9,27 @@ public class Main {
 		final Scanner scanner = new Scanner(System.in);
 		final char[] word = scanner.nextLine().toCharArray();
 
-		final Map<String, Integer> wordMap = new HashMap<>();
+		final Set<Integer> weights = new HashSet<>();
 
-		StringBuilder sb = new StringBuilder();
+		char last = '\0';
+		int count = 0;
 		for (char c : word) {
 
-			if(sb.length() == 0 || sb.charAt(sb.length() - 1) == c){
-				sb.append(c);
-				wordMap.put(sb.toString(), (c - 'a' + 1) * sb.length());
+			if(count == 0 || last == c){
+				count++;
+				weights.add(calcWeight(count, c));
+				last = c;
 			} else {
-				sb = new StringBuilder();
-				sb.append(c);
-				wordMap.put(sb.toString(), (sb.charAt(sb.length() - 1) - 'a' + 1) * sb.length());
+				count = 1;
+				last = c;
+				weights.add(calcWeight(count, c));
 			}
 
 		}
 
-		if(sb.length() != 0){
-			wordMap.put(sb.toString(), (sb.charAt(0) - 'a' + 1) * sb.length());
+		if(count != 0){
+			weights.add(calcWeight(count, last));
 		}
-
-		final HashSet<Integer> weights = new HashSet<>(wordMap.values());
 
 		final int n = scanner.nextInt();
 		for (int i = 0; i < n; i++) {
@@ -46,5 +43,9 @@ public class Main {
 
 		}
 
+	}
+
+	static int calcWeight(int count, char c) {
+		return (c - 'a' + 1) * count;
 	}
 }
