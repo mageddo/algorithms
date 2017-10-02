@@ -16,7 +16,7 @@ public class Main {
 		for (int i = 0; i < n; i++) {
 
 			final char[] numbers = scanner.nextLine().toCharArray();
-			final long first = checkIntervalOfOne(numbers);
+			final long first = checkInterval(numbers, 1);
 			if(first == -1){
 				System.out.println("NO");
 			} else {
@@ -26,7 +26,7 @@ public class Main {
 
 	}
 
-	static long checkIntervalOfOne(char[] numbers) {
+	static long checkInterval(final char[] numbers, final int interval) {
 
 		long first = -1;
 
@@ -35,20 +35,21 @@ public class Main {
 		}
 
 		int places = 1;
+
 		do {
 
-			first = checkInterval(numbers, places);
+			first = checkInterval(numbers, places, interval);
 			if(first != -1){
 				return first;
 			}
 			places++;
 
-		}while (numbers.length / places >= 2);
+		} while (numbers.length / places >= 2);
 
 		return first;
 	}
 
-	private static long checkInterval(char[] numbers, int places) {
+	private static long checkInterval(final char[] numbers, int places, final int interval) {
 
 		long first = -1;
 		long last = getNumber(numbers, 0, places);
@@ -75,13 +76,13 @@ public class Main {
 
 			final long diff = b - last;
 
-			if(diff > 1 || diff == 0){
+			if(diff > interval || diff == 0) {
 
 				// if the difference is more than one or the two are equal then this configuration will not be valid, try start
 				// with a greater place size
 				return -1;
 
-			} else if(diff == 1){
+			} else if(diff == interval) {
 
 				i += places;
 				if(first == -1){
@@ -90,6 +91,7 @@ public class Main {
 				last = b;
 
 			}
+
 		}
 		return first;
 	}
