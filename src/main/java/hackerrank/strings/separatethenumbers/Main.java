@@ -22,77 +22,64 @@ public class Main {
 
 	static void checkIntervalOfOne(char[] numbers) {
 
-		if(numbers.length == 1){
+		if(numbers.length == 1 || numbers[0] == '0'){
 			System.out.println("NO");
 			return ;
 		}
 
-		if(numbers[0] == '0'){
-			System.out.println("NO");
-			return ;
-		}
+		int places = 1, first;
+		do {
 
-		int places = 1;
-		int first = -1, last = -1;
-		for (int i = 0; i + places <= numbers.length; ) {
+			first = checkInterval(numbers, places);
+			if(first != -1){
+				System.out.printf("YES %d%n", first);
+				return ;
+			}
+			places++;
 
-			int a = getInt(numbers, i, places);
-			int b = getInt(numbers,i + places, places);
-			if(b == -1){
-				places++;
-				continue;
-			} else if (b == -2){
-				int tmp = a;
-				a = last;
-				b = tmp;
+		}while (numbers.length / places >= 2);
+
+		System.out.println("NO");
+
+	}
+
+	private static int checkInterval(char[] numbers, int places) {
+
+		int first = -1;
+		int last = getInt(numbers, 0, places);
+		for (int i = places; i + places <= numbers.length;) {
+
+			int b = getInt(numbers, i, places);
+
+			if(b <= 0){
+				return -1;
 			}
 
-			boolean increased = false;
-			if(b <= a){
-				increased = true;
-				if(i + places + places >= numbers.length){
-					first = -1;
-					break;
-				}
-				b = getInt(numbers,i + places, ++places);
-				if(b == -1){
-					continue;
+			if(b < last){
+				b = getInt(numbers, i, ++places);
+				if(b <= 0){
+					return -1;
 				}
 			}
 
-			final int diff = b - a;
-			if(diff > 1){
-				if(increased){
-					continue;
-				}
-				first = -1;
-				break;
-			} else if (diff == 1) {
-				if (!increased){
-					i += places * 2;
-				} else {
-					i += places * 2 - 1;
-				}
+			final int diff = b - last;
+			if(diff > 1 || diff == 0){
+				return -1;
+			} else if(diff == 1){
+				i += places;
 				if(first == -1){
-					first = a;
+					first = last;
 				}
 				last = b;
-				continue;
 			}
-
-			throw new UnsupportedOperationException("cannot come here");
-
 		}
-
-		final char[] bchars = String.valueOf(last).toCharArray();
-		if(first != -1 && Arrays.equals(bchars, Arrays.copyOfRange(numbers, numbers.length - bchars.length, numbers.length))){
-			System.out.printf("YES %d%n", first);
-		} else {
-			System.out.println("NO");
-		}
+		return first;
 	}
 
 	private static int getInt(char[] numbers, int i, int n) {
+		if (n > 9){
+			return -3;
+		}
 		if(i + n > numbers.length){
 			return -2;
 		}

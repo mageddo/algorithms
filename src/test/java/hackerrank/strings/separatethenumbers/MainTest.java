@@ -2,7 +2,6 @@ package hackerrank.strings.separatethenumbers;
 
 import org.junit.Assert;
 import org.junit.Test;
-import utils.TestUtils;
 
 import java.io.ByteArrayOutputStream;
 
@@ -105,6 +104,18 @@ public class MainTest {
 		Main.main(new String[]{});
 
 		Assert.assertEquals(getResourceAsString(getClass(), "/output00.txt"), new String(out.toByteArray()));
+
+	}
+
+	@Test
+	public void case02() throws Exception {
+
+		final ByteArrayOutputStream out = setAndGetOut();
+		writeToIn(getClass(), "/input02.txt");
+
+		Main.main(new String[]{});
+
+		Assert.assertEquals(getResourceAsString(getClass(), "/output02.txt"), new String(out.toByteArray()));
 
 	}
 
