@@ -22,6 +22,16 @@ public class Main {
 
 	static void checkIntervalOfOne(char[] numbers) {
 
+		if(numbers.length == 1){
+			System.out.println("NO");
+			return ;
+		}
+
+		if(numbers[0] == '0'){
+			System.out.println("NO");
+			return ;
+		}
+
 		int places = 1;
 		int first = -1, last = -1;
 		for (int i = 0; i + places <= numbers.length; ) {
