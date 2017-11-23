@@ -19,7 +19,7 @@ public class Main {
 						maxWeights[i][itWeight] = new Item();
 					} else {
 
-						final int actualWeight = itemValues[i - 1].value;
+						final int actualWeight = itemsWeight[i - 1].value;
 						if (actualWeight <= itWeight){
 								final Item
 										a = Item.merge(itemValues[i - 1], maxWeights[i - 1][itWeight - actualWeight]),
@@ -44,17 +44,10 @@ public class Main {
 
 	// Driver program to test above function
 		public static void main(String args[]) {
-			 Item val[] = {
-				 new Item(65), new Item(40), new Item(30), new Item(45),
-					new Item(5), new Item(60), new Item(45), new Item(30),
-					new Item(30), new Item(45), new Item(60), new Item(60),
-					new Item(45), new Item(30), new Item(30), new Item(60),
-					new Item(30), new Item(30)
-
-			 };
-//			 Item wt[] = { new Item(10), new Item(20), new Item(30) };
-			int W = 180 + 240;
-			System.out.printf("size=%d, result=%s", val.length,knapSack(W, null, val, val.length));
+			 Item val[] = { new Item(2), new Item(2), new Item(4), new Item(2) };
+			 Item wt[] = { new Item(2), new Item(2), new Item(4), new Item(2) };
+			int W = 6;
+			System.out.println(knapSack(W, wt, val, val.length));
 		}
 
 		static class Item {
