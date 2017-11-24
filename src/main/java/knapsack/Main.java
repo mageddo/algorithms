@@ -5,6 +5,15 @@ import java.util.List;
 
 public class Main {
 
+
+	// Driver program to test above function
+	public static void main(String args[]) {
+		Item val[] = { new Item(2), new Item(2), new Item(4), new Item(2) };
+		Item wt[] = { new Item(2), new Item(2), new Item(4), new Item(2) };
+		int W = 6;
+		System.out.println(knapSack(W, wt, val, val.length));
+	}
+
 		// Returns the maximum value that can be put in a knapsack of capacity sackCapacity
 		static Item knapSack(final int sackCapacity, final Item[] itemsWeight, final Item[] itemValues, final int itemsLength) {
 
@@ -41,14 +50,6 @@ public class Main {
 			}
 			return b;
 	}
-
-	// Driver program to test above function
-		public static void main(String args[]) {
-			 Item val[] = { new Item(2), new Item(2), new Item(4), new Item(2) };
-			 Item wt[] = { new Item(2), new Item(2), new Item(4), new Item(2) };
-			int W = 6;
-			System.out.println(knapSack(W, wt, val, val.length));
-		}
 
 		static class Item {
 
