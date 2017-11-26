@@ -16,7 +16,7 @@ public class MainTest {
 //		final ByteArrayOutputStream out = TestUtils.setAndGetOut();
 		System.setIn(getResource(MainTest.class, "/sinput0.txt"));
 
-		Main.main(new String[]{});
+//		Main.main(new String[]{});
 	}
 
 }

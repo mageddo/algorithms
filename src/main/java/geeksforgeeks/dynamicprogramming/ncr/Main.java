@@ -1,22 +1,34 @@
 package geeksforgeeks.dynamicprogramming.ncr;
 
 import java.math.BigInteger;
+import java.util.Scanner;
 
 /**
  * @see <a href="https://practice.geeksforgeeks.org/problems/ncr/0">Problem</a><br />
- * <a href="https://en.wikipedia.org/wiki/Binomial_coefficient">Binomial Coefficient</a>
+ * <a href="https://en.wikipedia.org/wiki/Binomial_coefficient">Binomial Coefficient</a><br />
+ * <img src="https://i.imgur.com/RxPnAAJ.png" />
  */
 public class Main {
 	public static void main(String[] args) {
 
-		final int fat = 3249;
+		final Scanner scanner = new Scanner(System.in);
 
-		System.out.println(factorial(fat));
+		final int testCases = scanner.nextInt(); // T
+
+		for (int i = 0; i < testCases; i++) {
+			System.out.println(ncr(scanner.nextInt(), scanner.nextInt()));
+		}
+
 	}
 
-//	static int ncr(int n, int r) {
-//		int[] fat = new int[n];
-//	}
+	static BigInteger ncr(int n, int r) {
+		final BigInteger ncr = factorial(n).divide(
+			factorial(r).multiply(
+				factorial(n - r)
+			)
+		);
+		return ncr;
+	}
 
 	static BigInteger factorial(int n) {
 		return factorial(new BigInteger[n + 1], n);
