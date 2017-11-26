@@ -68,27 +68,27 @@ public class MainTest {
 
 	@Test
 	public void factorial0(){
-		Assert.assertEquals(1, Main.factorial(0).longValue());
+		Assert.assertEquals(1, Main.factorialBottomUp(0).longValue());
 	}
 
 	@Test
 	public void factorial1(){
-		Assert.assertEquals(1, Main.factorial(1).longValue());
+		Assert.assertEquals(1, Main.factorialBottomUp(1).longValue());
 	}
 
 	@Test
 	public void factorial2(){
-		Assert.assertEquals(2, Main.factorial(2).longValue());
+		Assert.assertEquals(2, Main.factorialBottomUp(2).longValue());
 	}
 
 	@Test
 	public void factorial3(){
-		Assert.assertEquals(6, Main.factorial(3).longValue());
+		Assert.assertEquals(6, Main.factorialBottomUp(3).longValue());
 	}
 
 	@Test
 	public void factorial7(){
-		Assert.assertEquals(5040, Main.factorial(7).longValue());
+		Assert.assertEquals(5040, Main.factorialBottomUp(7).longValue());
 	}
 
 }
