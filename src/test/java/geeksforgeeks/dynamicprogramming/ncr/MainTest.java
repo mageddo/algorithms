@@ -39,6 +39,34 @@ public class MainTest {
 	}
 
 	@Test
+	public void case3() throws Exception {
+
+		// arrange
+		final ByteArrayOutputStream out = setAndGetOut();
+		writeToIn(MainTest.class, "/input03.txt");
+
+		// act
+		Main.main(new String[]{});
+
+		// assert
+		Assert.assertEquals("735309323\n", new String(out.toByteArray()));
+	}
+
+	@Test
+	public void case4() throws Exception {
+
+		// arrange
+		final ByteArrayOutputStream out = setAndGetOut();
+		writeToIn(MainTest.class, "/input04.txt");
+
+		// act
+		Main.main(new String[]{});
+
+		// assert
+		Assert.assertEquals("6\n", new String(out.toByteArray()));
+	}
+
+	@Test
 	public void factorial0(){
 		Assert.assertEquals(1, Main.factorial(0).longValue());
 	}
