@@ -1,10 +1,10 @@
-package hackerrank.dynamicprogramming.coinchange.fibonacci;
+package hackerrank.dynamicprogramming.fibonacci;
 
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @see <a href="http://www.geeksforgeeks.org/program-for-nth-fibonacci-number/">the problem</a>
