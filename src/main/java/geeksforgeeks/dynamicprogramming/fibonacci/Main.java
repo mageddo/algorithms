@@ -1,4 +1,4 @@
-package hackerrank.dynamicprogramming.fibonacci;
+package geeksforgeeks.dynamicprogramming.fibonacci;
 
 import org.apache.commons.lang3.time.StopWatch;
 

@@ -2,6 +2,9 @@ package hackerrank.dynamicprogramming.coinchange;
 
 import java.util.Scanner;
 
+/**
+ * https://www.hackerrank.com/challenges/coin-change/problem
+ */
 public class Main {
 	public static void main(String[] args) {
 
