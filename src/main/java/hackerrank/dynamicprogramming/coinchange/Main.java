@@ -13,11 +13,27 @@ public class Main {
 			coins[i] = scanner.nextInt();
 		}
 
-		System.out.println(calcWaysdp(coins, change, coins.length));
+		System.out.println(calcWaysdpSolution1(coins, change, coins.length));
 
 	}
 
-	static long calcWaysdp(int[] coins, int change, int m) {
+	static long calcWaysdp(final int[] coins, final int change) {
+
+		final long[] waysByChange = new long[change + 1];
+		waysByChange[0] = 1;
+		for (int i = 0; i < coins.length; i++) {
+			final int coin = coins[i];
+			for (int j = coin; j <= change; j++) {
+				/*
+					Basicamente esse codigo diz, se o indice do troco - moeda cair numa posicao do array que deu bom, entao esse tambem vai dar
+				 */
+				waysByChange[j] += waysByChange[j - coin];
+			}
+		}
+		return waysByChange[change];
+	}
+
+	static long calcWaysdpSolution1(int[] coins, int change, int m) {
 
 		final long[][] table = new long[change + 1][m];
 
@@ -49,6 +65,7 @@ public class Main {
 		return table[change][m - 1];
 
 	}
+
 	static int calcWays(int[] coins, int change, int i) {
 
 		if(change == 0){
