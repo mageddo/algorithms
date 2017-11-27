@@ -1,6 +1,5 @@
 package hackerrank.dynamicprogramming.coinchange;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -15,15 +14,12 @@ public class Main {
 		}
 
 		System.out.println(calcWaysdp(coins, change, coins.length));
-		System.out.printf("change=%d, coinValuesSize=%d, coins=%s%n", change, coinValuesSize, Arrays.toString(coins));
-
-
 
 	}
 
-	static int calcWaysdp(int[] coins, int change, int m) {
+	static long calcWaysdp(int[] coins, int change, int m) {
 
-		final int[][] table = new int[change + 1][m];
+		final long[][] table = new long[change + 1][m];
 
 		for (int i = 0; i < m; i++) {
 			table[0][i] = 1;
@@ -32,15 +28,17 @@ public class Main {
 		for (int i = 1; i <= change; i++) {
 			for (int j = 0; j < m; j++) {
 
-				final int x,y;
-				if(i - coins[j] >= 0){
-					x = table[i - coins[j]][j];
+				final int remainChange = i - coins[j];
+				final long x,  y;
+
+				if(remainChange >= 0){
+					x = table[remainChange][j];
 				}else{
 					x = 0;
 				}
 
 				if(j >= 1) {
-					y = table[i][j - 1];
+					y = table[i][j - 1]; // valor da ultima moeda calculada para o change i
 				}else{
 					y = 0;
 				}
