@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		final Scanner scanner = new Scanner(System.in);
-		System.out.println(customFibonacci(scanner.nextInt(), scanner.nextInt(), scanner.nextInt()));
+		System.out.println(customFibonacciV2(scanner.nextInt(), scanner.nextInt(), scanner.nextInt()));
 	}
 
 	/**
@@ -38,5 +38,22 @@ public class Main {
 			table[i] = table[i - 2].add(table[i - 1].pow(2));
 		}
 		return table[n];
+	}
+
+	/**
+	 * Same implementation without need store table
+	 * @param t1
+	 * @param t2
+	 * @param n
+	 * @return
+	 */
+	static BigInteger customFibonacciV2(int t1, int t2, int n){
+		BigInteger last1 =  BigInteger.valueOf(t1), last2 = BigInteger.valueOf(t2);
+		for (int i = 3; i <= n; i++) {
+			BigInteger tmp = last2;
+			last2 = last1.add(last2.pow(2));
+			last1 = tmp;
+		}
+		return last2;
 	}
 }
