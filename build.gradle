@@ -11,12 +11,12 @@ repositories {
 
 dependencies {
 
-	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
-	compile 'org.slf4j:slf4j-api:1.7.21'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+	implementation 'org.slf4j:slf4j-api:1.7.21'
 
-	testCompile 'junit:junit:4.12'
-	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-	testCompile 'commons-io:commons-io:2.4'
+	testImplementation 'junit:junit:4.12'
+	testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+	testImplementation 'commons-io:commons-io:2.4'
 }
 
 test {
